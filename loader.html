@@ -1,0 +1,30 @@
+<h3 id="calcLoader">Загружаю калькулятор, подождите немного...</h3>
+<div class="calculator"></div>
+
+<script>
+let data = {
+  "success_url": "https://сюда вернуться в случае успеха",
+  "decline_url": "https://сюда вернуться в случае отказа",
+  "age": "kid",
+  "type": "workout",
+  "peoples": [{"cardnum":1,"f":"Иванов","n":"Иван","o":"Иванович","birthdate":"04.03.2013","doctype":2,"birthplace":"Краснодар","serial":"V-РО","number":"623434"}],
+  "amount": {
+    "value": 250000
+  },
+  promo: {
+    value: "YOUR_PROMO"
+  },
+  sports: [ {
+    id: 76 // из справочника https://api.sport.insure/calculator/help
+  } ]
+};
+$.post('https://api.sport.insure/calculator?v=2', data, function (response) {
+    if (response) {
+        $('.calculator').html(response);
+        $.getScript("https://api.sport.insure/application.min.js").done(function( script, textStatus ) {
+            $('#calcLoader').remove();
+        });
+    }
+});
+</script>
+
